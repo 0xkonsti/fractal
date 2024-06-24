@@ -1,0 +1,8 @@
+// This is a single line comment
+/* This is a multi-line comment */
+
+{
+    15  + 5 * 2;
+    12.5 - 7 / 2.;
+    (7 - 3) / 2;
+}
