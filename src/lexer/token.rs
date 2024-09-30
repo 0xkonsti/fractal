@@ -34,7 +34,7 @@ impl TokenType {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Token {
     tt: TokenType,
     lexeme: String,
@@ -48,6 +48,10 @@ impl Token {
             lexeme,
             location,
         }
+    }
+
+    pub fn token_type(&self) -> TokenType {
+        self.tt
     }
 }
 
