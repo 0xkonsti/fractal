@@ -12,6 +12,7 @@ pub struct Lexer<'a> {
     cursor: usize,
     location: Location,
 
+    peeked: Option<Token>,
     cache: Vec<Token>,
 
     at_eof: bool,
@@ -24,6 +25,7 @@ impl<'a> Lexer<'a> {
             cursor: 0,
             location: Location::new(path, 1, 1),
 
+            peeked: None,
             cache: Vec::new(),
 
             at_eof: false,
@@ -39,7 +41,18 @@ impl<'a> Lexer<'a> {
     }
 
     pub fn next_token(&mut self) -> Option<Token> {
+        if let Some(token) = self.peeked.take() {
+            return Some(token);
+        }
+
         self.next()
+    }
+
+    pub fn peek_token(&mut self) -> Option<&Token> {
+        if self.peeked.is_none() {
+            self.peeked = self.next();
+        }
+        self.peeked.as_ref()
     }
 
     fn trim_whitespace(&mut self) {
@@ -96,7 +109,7 @@ impl<'a> Iterator for Lexer<'a> {
                         }
                     }
 
-                    if let Some(tt) = is_keyword(&lexeme) {
+                    if let Some(tt) = TokenType::is_keyword(&lexeme) {
                         (tt, lexeme)
                     } else {
                         (TokenType::Identifier, lexeme)
@@ -184,13 +197,6 @@ fn is_identifier(c: char, is_first_char: bool) -> bool {
     c == '_' || c.is_alphabetic() || (!is_first_char && c.is_digit(10))
 }
 
-fn is_keyword(lexeme: &str) -> Option<TokenType> {
-    match lexeme {
-        "fn" => Some(TokenType::Fn_),
-        _ => None,
-    }
-}
-
 fn is_number(c: char, is_float: &mut bool) -> bool {
     if c == '.' {
         if *is_float {
@@ -209,6 +215,13 @@ fn handle_single_char_token(c: char) -> Option<TokenType> {
         ')' => Some(TokenType::RParen),
         '{' => Some(TokenType::LBrace),
         '}' => Some(TokenType::RBrace),
+
+        '+' => Some(TokenType::Plus),
+        '-' => Some(TokenType::Minus),
+        '*' => Some(TokenType::Asterisk),
+        '/' => Some(TokenType::Slash),
+
+        ';' => Some(TokenType::SemiColon),
         _ => None,
     }
 }

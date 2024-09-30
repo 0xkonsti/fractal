@@ -1,0 +1,27 @@
+use crate::lexer::Lexer;
+
+mod parse_tree;
+
+#[macro_export]
+macro_rules! unexpected_token {
+    ($token:expr) => {
+        panic!("Unexpected token: {:#?}", $token);
+    };
+}
+
+#[derive(Debug)]
+pub struct Parser {
+    tree: parse_tree::ParseTree,
+}
+
+impl Parser {
+    pub fn new(lexer: &mut Lexer) -> Self {
+        Self {
+            tree: parse_tree::ParseTree::parse(lexer),
+        }
+    }
+
+    pub fn tree(&self) -> &parse_tree::ParseTree {
+        &self.tree
+    }
+}

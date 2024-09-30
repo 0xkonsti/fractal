@@ -13,6 +13,13 @@ pub enum TokenType {
     LBrace, // {
     RBrace, // }
 
+    Plus,     // +
+    Minus,    // -
+    Asterisk, // *
+    Slash,    // /
+
+    SemiColon, // ;
+
     // Multi-character tokens
 
     // Keywords
@@ -29,6 +36,13 @@ pub enum TokenType {
 }
 
 impl TokenType {
+    pub fn is_keyword(keyword: &str) -> Option<TokenType> {
+        match keyword {
+            "fn" => Some(TokenType::Fn_),
+            _ => None,
+        }
+    }
+
     fn to_string(&self) -> String {
         format!("{:?}", self).to_uppercase().replace("_", "")
     }
@@ -52,6 +66,10 @@ impl Token {
 
     pub fn token_type(&self) -> TokenType {
         self.tt
+    }
+
+    pub fn lexeme(&self) -> &str {
+        &self.lexeme
     }
 }
 
