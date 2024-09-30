@@ -1,12 +1,56 @@
 (* This is the Grammar for the programming language fractal. *)
 
 program
-	: functionDecl* Eof
+	: fnDecl* Eof
 	;
 
-functionDecl
-	: 'fn' identifier '(' ')' '{' '}'
+fnDecl
+	: 'fn' id param_list block
 
-identifier
+id
 	: [a-zA-Z_][a-zA-Z0-9_]*
     ;
+
+param_list
+	: '(' ')' // TODO: Add parameters
+	;
+
+block
+	: '{' stmt* '}'
+	;
+
+stmt
+	: expr ';'
+	| 'return' expr ';'
+	;
+
+expr
+	: term
+	| expr '+' term
+	| expr '-' term
+	;
+
+term
+	: factor
+	| term '*' factor
+	| term '/' factor
+	;
+
+factor
+	: id
+	| num
+	| '(' expr ')'
+	;
+
+num
+	: int
+	| float
+	;
+
+int
+	: [0-9]+
+	;
+
+float
+	: [0-9]+\.[0-9]+
+	;

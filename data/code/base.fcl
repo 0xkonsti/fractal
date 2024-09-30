@@ -1,0 +1,9 @@
+// base.fcl
+
+/*
+This is the minimal fractal program that can be compiled.
+It contains a single main function declaration.
+This program will simply exit with a status code of 0.
+*/
+
+fn main() {}
