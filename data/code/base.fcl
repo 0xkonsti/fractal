@@ -6,4 +6,6 @@ It contains a single main function declaration.
 This program will simply exit with a status code of 0.
 */
 
-fn main() {}
+fn main() {
+	return (1 + 2) * (3 / 4);
+}

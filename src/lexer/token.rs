@@ -24,6 +24,7 @@ pub enum TokenType {
 
     // Keywords
     Fn_,
+    Return,
 
     // Types
 
@@ -39,7 +40,15 @@ impl TokenType {
     pub fn is_keyword(keyword: &str) -> Option<TokenType> {
         match keyword {
             "fn" => Some(TokenType::Fn_),
+            "return" => Some(TokenType::Return),
             _ => None,
+        }
+    }
+
+    pub fn is_number(&self) -> bool {
+        match self {
+            TokenType::Integer | TokenType::Float => true,
+            _ => false,
         }
     }
 

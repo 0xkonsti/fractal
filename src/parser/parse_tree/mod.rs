@@ -1,7 +1,12 @@
 mod block;
+mod expr;
+mod factor;
 mod func_decl;
+mod number;
 mod param_list;
 mod program;
+mod stmt;
+mod term;
 
 use crate::lexer::Lexer;
 
@@ -21,10 +26,11 @@ pub enum PTNodeType {
     ParamList,
 
     Block,
-    // Stmt,
-    // Expr,
-    // Term,
-    // Factor,
+    Stmt,
+    Expr,
+    Term,
+    Factor,
+    Number,
 }
 
 pub trait PTNode: std::fmt::Debug {

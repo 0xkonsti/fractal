@@ -12,6 +12,24 @@ pub struct PTNFuncDecl {
     body: PTNBlock,
 }
 
+impl PTNFuncDecl {
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+
+    pub fn is_main(&self) -> bool {
+        self.is_main
+    }
+
+    pub fn param_list(&self) -> &PTNParamList {
+        &self.param_list
+    }
+
+    pub fn body(&self) -> &PTNBlock {
+        &self.body
+    }
+}
+
 impl PTNode for PTNFuncDecl {
     fn parse(lexer: &mut Lexer) -> Box<dyn PTNode> {
         if let Some(token) = lexer.next_token() {

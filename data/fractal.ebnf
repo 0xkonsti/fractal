@@ -26,14 +26,14 @@ stmt
 
 expr
 	: term
-	| expr '+' term
-	| expr '-' term
+	| term '+' expr
+	| term '-' expr
 	;
 
 term
 	: factor
-	| term '*' factor
-	| term '/' factor
+	| factor '*' term
+	| factor '/' term
 	;
 
 factor

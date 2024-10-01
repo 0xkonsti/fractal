@@ -13,7 +13,6 @@ pub struct Lexer<'a> {
     location: Location,
 
     peeked: Option<Token>,
-    cache: Vec<Token>,
 
     at_eof: bool,
 }
@@ -26,26 +25,13 @@ impl<'a> Lexer<'a> {
             location: Location::new(path, 1, 1),
 
             peeked: None,
-            cache: Vec::new(),
 
             at_eof: false,
         }
     }
 
-    pub fn clear_cache(&mut self) {
-        self.cache.clear();
-    }
-
-    pub fn cached(&self) -> &Vec<Token> {
-        &self.cache
-    }
-
     pub fn next_token(&mut self) -> Option<Token> {
-        if let Some(token) = self.peeked.take() {
-            return Some(token);
-        }
-
-        self.next()
+        self.__next()
     }
 
     pub fn peek_token(&mut self) -> Option<&Token> {
@@ -53,6 +39,14 @@ impl<'a> Lexer<'a> {
             self.peeked = self.next();
         }
         self.peeked.as_ref()
+    }
+
+    fn __next(&mut self) -> Option<Token> {
+        if let Some(token) = self.peeked.take() {
+            return Some(token);
+        }
+
+        self.next()
     }
 
     fn trim_whitespace(&mut self) {
@@ -151,7 +145,6 @@ impl<'a> Iterator for Lexer<'a> {
         };
 
         let token = Some(Token::new(tt, lexeme, location));
-        self.cache.push(token.clone().unwrap());
         token
     }
 }
