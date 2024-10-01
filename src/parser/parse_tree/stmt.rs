@@ -28,14 +28,14 @@ impl PTNode for PTNStmt {
                     lexer.next_token();
                     return Box::new(Self {
                         stmt_type: StmtType::Return {
-                            expr: get_expr(lexer)
+                            expr: get_expr(lexer),
                         },
                     });
                 }
                 _ => {
                     return Box::new(Self {
                         stmt_type: StmtType::Expr {
-                            expr: get_expr(lexer)
+                            expr: get_expr(lexer),
                         },
                     });
                 }
