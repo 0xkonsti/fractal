@@ -214,6 +214,8 @@ fn handle_single_char_token(c: char) -> Option<TokenType> {
         '*' => Some(TokenType::Asterisk),
         '/' => Some(TokenType::Slash),
 
+        '$' => Some(TokenType::Dollar),
+
         ';' => Some(TokenType::SemiColon),
         _ => None,
     }

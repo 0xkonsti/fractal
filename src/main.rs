@@ -17,7 +17,7 @@ fn main() {
     //     println!("{}", token);
     // }
 
-    // println!("{:#?}", parser);
+    println!("{:#?}", parser);
 
     codegen.generate(&mut parser);
     codegen.save("./out/c/main.c");

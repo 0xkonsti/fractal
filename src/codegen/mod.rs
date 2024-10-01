@@ -34,10 +34,15 @@ impl Codegen {
 
         for func_decl in program.func_decls() {
             self.output.push_str("int ");
-            self.output.push_str(if func_decl.is_main() { "main" } else { func_decl.name() });
+            self.output.push_str(if func_decl.is_main() {
+                "main"
+            } else {
+                func_decl.name()
+            });
             self.output.push_str("(");
-            
+
             // TODO: Generate parameter list
+            self.output.push_str("void");
 
             self.output.push_str(") {\n");
 
@@ -67,14 +72,25 @@ impl Codegen {
 fn generate_stmt(stmt: &PTNStmt) -> String {
     let mut output = String::new();
     match stmt.stmt_type() {
-        StmtType::Return { expr } => {
+        StmtType::Return {
+            expr,
+        } => {
             output.push_str("return ");
             output.push_str(&generate_expr(expr));
             output.push_str(";\n");
         }
-        StmtType::Expr { expr } => {
+        StmtType::Expr {
+            expr,
+        } => {
             output.push_str(&generate_expr(expr));
             output.push_str(";\n");
+        }
+        StmtType::CBlock {
+            c_block,
+        } => {
+            output.push_str("{ ");
+            output.push_str(&c_block.raw());
+            output.push_str("}\n");
         }
     }
 
@@ -85,10 +101,16 @@ fn generate_expr(expr: &PTNExpr) -> String {
     let mut output = String::new();
 
     match expr.expr_type() {
-        PTNExprType::Term { term } => {
+        PTNExprType::Term {
+            term,
+        } => {
             output.push_str(&generate_term(term));
         }
-        PTNExprType::BinOp { left, right, op } => {
+        PTNExprType::BinOp {
+            left,
+            right,
+            op,
+        } => {
             output.push_str(&generate_term(left));
             output.push_str(" ");
             output.push_str(generate_op(op));
@@ -104,10 +126,16 @@ fn generate_term(term: &PTNTerm) -> String {
     let mut output = String::new();
 
     match term.term_type() {
-        PTNTermType::Factor { factor } => {
+        PTNTermType::Factor {
+            factor,
+        } => {
             output.push_str(&generate_factor(factor));
         }
-        PTNTermType::BinOp { left, right, op } => {
+        PTNTermType::BinOp {
+            left,
+            right,
+            op,
+        } => {
             output.push_str(&generate_factor(left));
             output.push_str(" ");
             output.push_str(generate_op(op));
@@ -123,15 +151,21 @@ fn generate_factor(factor: &PTNFactor) -> String {
     let mut output = String::new();
 
     match factor.factor_type() {
-        PTNFactorType::Expr { expr } => {
+        PTNFactorType::Expr {
+            expr,
+        } => {
             output.push_str("(");
             output.push_str(&generate_expr(expr));
             output.push_str(")");
         }
-        PTNFactorType::Number { number } => {
+        PTNFactorType::Number {
+            number,
+        } => {
             output.push_str(number.value());
         }
-        PTNFactorType::Ident { ident } => {
+        PTNFactorType::Ident {
+            ident,
+        } => {
             output.push_str(&ident.to_string());
         }
     }

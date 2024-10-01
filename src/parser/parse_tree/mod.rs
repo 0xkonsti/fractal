@@ -1,4 +1,5 @@
 pub mod block;
+pub mod c_block;
 pub mod expr;
 pub mod factor;
 pub mod func_decl;
@@ -26,6 +27,7 @@ pub enum PTNodeType {
     ParamList,
 
     Block,
+    CBlock,
     Stmt,
     Expr,
     Term,

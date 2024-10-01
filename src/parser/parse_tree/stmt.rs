@@ -1,3 +1,4 @@
+use super::c_block::PTNCBlock;
 use super::expr::PTNExpr;
 use super::{PTNode, PTNodeType};
 use crate::downcast_node;
@@ -7,6 +8,7 @@ use crate::lexer::{Lexer, TokenType};
 pub enum StmtType {
     Expr { expr: PTNExpr },
     Return { expr: PTNExpr },
+    CBlock { c_block: PTNCBlock },
 }
 
 #[derive(Debug, Clone)]
@@ -29,6 +31,14 @@ impl PTNode for PTNStmt {
                     return Box::new(Self {
                         stmt_type: StmtType::Return {
                             expr: get_expr(lexer),
+                        },
+                    });
+                }
+                TokenType::Dollar => {
+                    lexer.next_token();
+                    return Box::new(Self {
+                        stmt_type: StmtType::CBlock {
+                            c_block: downcast_node!(PTNCBlock::parse(lexer), PTNCBlock),
                         },
                     });
                 }
@@ -57,6 +67,7 @@ impl PTNode for PTNStmt {
 fn get_expr(lexer: &mut Lexer) -> PTNExpr {
     let expr = PTNExpr::parse(lexer);
     if let Some(token) = lexer.next_token() {
+        println!("{:?}", token);
         if token.token_type() != TokenType::SemiColon {
             panic!("Expected semicolon");
         }
