@@ -7,6 +7,8 @@ pub struct PTNParamList {
     // params: Vec<PTNParam>,
 }
 
+
+
 impl PTNode for PTNParamList {
     fn parse(lexer: &mut Lexer) -> Box<dyn PTNode> {
         if let Some(token) = lexer.next_token() {
@@ -23,7 +25,9 @@ impl PTNode for PTNParamList {
             }
         }
 
-        Box::new(Self {})
+        Box::new(Self {
+            // params: Vec::new(),
+        })
     }
 
     fn node_type(&self) -> PTNodeType {

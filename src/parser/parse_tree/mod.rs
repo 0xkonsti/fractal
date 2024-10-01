@@ -1,12 +1,12 @@
-mod block;
-mod expr;
-mod factor;
-mod func_decl;
-mod number;
-mod param_list;
-mod program;
-mod stmt;
-mod term;
+pub mod block;
+pub mod expr;
+pub mod factor;
+pub mod func_decl;
+pub mod number;
+pub mod param_list;
+pub mod program;
+pub mod stmt;
+pub mod term;
 
 use crate::lexer::Lexer;
 
@@ -17,7 +17,7 @@ macro_rules! downcast_node {
     };
 }
 
-#[derive(Debug, PartialEq, Clone, Copy)]
+#[derive(Debug, PartialEq, Clone, Copy, Eq)]
 pub enum PTNodeType {
     Program,
 

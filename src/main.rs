@@ -1,3 +1,4 @@
+mod codegen;
 mod lexer;
 mod parser;
 
@@ -10,10 +11,14 @@ fn main() {
 
     let mut lexer = lexer::Lexer::new(path, &source);
     let mut parser = parser::Parser::new(&mut lexer);
+    let mut codegen = codegen::Codegen::new();
 
     // for token in lexer {
     //     println!("{}", token);
     // }
 
-    println!("{:#?}", parser);
+    // println!("{:#?}", parser);
+
+    codegen.generate(&mut parser);
+    codegen.save("./out/c/main.c");
 }

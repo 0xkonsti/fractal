@@ -7,5 +7,5 @@ This program will simply exit with a status code of 0.
 */
 
 fn main() {
-	return (1 + 2) * (3 / 4);
+    10 + 10;
 }

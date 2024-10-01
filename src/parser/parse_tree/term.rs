@@ -20,6 +20,12 @@ pub struct PTNTerm {
     term_type: PTNTermType,
 }
 
+impl PTNTerm {
+    pub fn term_type(&self) -> &PTNTermType {
+        &self.term_type
+    }
+}
+
 impl PTNode for PTNTerm {
     fn parse(lexer: &mut Lexer) -> Box<dyn PTNode> {
         let left = PTNFactor::parse(lexer);

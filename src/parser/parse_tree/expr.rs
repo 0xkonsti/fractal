@@ -20,6 +20,12 @@ pub struct PTNExpr {
     expr_type: PTNExprType,
 }
 
+impl PTNExpr {
+    pub fn expr_type(&self) -> &PTNExprType {
+        &self.expr_type
+    }
+}
+
 impl PTNode for PTNExpr {
     fn parse(lexer: &mut Lexer) -> Box<dyn PTNode> {
         let left = PTNTerm::parse(lexer);

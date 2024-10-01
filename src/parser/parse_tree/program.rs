@@ -8,6 +8,12 @@ pub struct PTNProgram {
     func_decls: Vec<PTNFuncDecl>,
 }
 
+impl PTNProgram {
+    pub fn func_decls(&self) -> &Vec<PTNFuncDecl> {
+        &self.func_decls
+    }
+}
+
 impl PTNode for PTNProgram {
     fn parse(lexer: &mut Lexer) -> Box<dyn PTNode> {
         let mut func_decls = Vec::new();

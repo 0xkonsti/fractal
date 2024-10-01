@@ -8,6 +8,12 @@ pub struct PTNBlock {
     stmts: Vec<PTNStmt>,
 }
 
+impl PTNBlock {
+    pub fn stmts(&self) -> &Vec<PTNStmt> {
+        &self.stmts
+    }
+}
+
 impl PTNode for PTNBlock {
     fn parse(lexer: &mut Lexer) -> Box<dyn PTNode> {
         if let Some(token) = lexer.next_token() {
