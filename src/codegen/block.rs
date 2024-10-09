@@ -1,9 +1,12 @@
+use std::collections::HashSet;
+
 use super::push_indented;
 use super::stmt::generate_stmt;
 use crate::parser::parse_tree::block::PTNBlock;
 
 pub fn generate_block(
     block: &PTNBlock,
+    includes: &mut HashSet<String>,
     indent_depth: usize,
     pre: Option<&str>,
     post: Option<&str>,
@@ -17,7 +20,7 @@ pub fn generate_block(
     }
 
     for stmt in block.stmts() {
-        push_indented(&mut output, indent_depth + 1, &generate_stmt(stmt));
+        push_indented(&mut output, indent_depth + 1, &generate_stmt(stmt, includes));
     }
 
     if let Some(post) = post {

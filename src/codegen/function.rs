@@ -1,7 +1,9 @@
+use std::collections::HashSet;
+
 use super::block::generate_block;
 use crate::parser::parse_tree::func_decl::PTNFuncDecl;
 
-pub fn generate_function_decl(func_decl: &PTNFuncDecl, indent_depth: usize) -> String {
+pub fn generate_function_decl(func_decl: &PTNFuncDecl, includes: &mut HashSet<String>, indent_depth: usize) -> String {
     let mut output = String::new();
 
     // TODO: Generate return type
@@ -23,6 +25,7 @@ pub fn generate_function_decl(func_decl: &PTNFuncDecl, indent_depth: usize) -> S
     let body = func_decl.body();
     output.push_str(&generate_block(
         body,
+        includes,
         indent_depth,
         None,
         if func_decl.is_main() {

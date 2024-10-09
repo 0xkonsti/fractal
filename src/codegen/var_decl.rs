@@ -1,9 +1,15 @@
+use std::collections::HashSet;
+
 use super::expr::generate_expr;
 use crate::lexer::TokenType;
 use crate::parser::parse_tree::var_decl::PTNVarDecl;
 
-pub fn generate_var_decl(var_decl: &PTNVarDecl) -> String {
+pub fn generate_var_decl(var_decl: &PTNVarDecl, includes: &mut HashSet<String>,) -> String {
     let mut output = String::new();
+
+    if var_decl.var_type().is_int_type() {
+        includes.insert("<stdint.h>".to_string());
+    }
 
     match var_decl.var_type() {
         TokenType::I8 => {

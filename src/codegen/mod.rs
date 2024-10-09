@@ -2,6 +2,7 @@ use crate::downcast_node;
 use crate::parser::parse_tree::program::PTNProgram;
 use crate::parser::parse_tree::PTNodeType;
 use crate::parser::Parser;
+use std::collections::HashSet;
 use std::fs::{create_dir_all, File};
 use std::io::prelude::*;
 
@@ -37,12 +38,19 @@ impl Codegen {
 
         let program = downcast_node!(root, PTNProgram);
 
-        // Add the necessary includes
-        // TODO: check if these are actually necessary (e.g. might not use any int types)
-        self.output.push_str("#include <stdint.h>\n\n");
+        let mut includes: HashSet<String> = HashSet::new();
 
-        self.output
-            .push_str(&program::generate_program(&program, 0));
+        let function = program::generate_program(&program, &mut includes, 0);
+
+        for include in &includes {
+            self.output.push_str(format!("#include {}\n", include).as_str());
+        }
+        if !includes.is_empty() {
+            self.output.push_str("\n");
+        }
+
+        self.output.push_str(&function);
+
     }
 
     pub fn save(&self, path: &str) {
