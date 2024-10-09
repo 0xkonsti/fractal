@@ -1,5 +1,5 @@
 use crate::downcast_node;
-use crate::lexer::{Token, TokenType};
+use crate::lexer::TokenType;
 use crate::parser::parse_tree::expr::{PTNExpr, PTNExprType};
 use crate::parser::parse_tree::factor::{PTNFactor, PTNFactorType};
 use crate::parser::parse_tree::program::PTNProgram;
@@ -84,13 +84,6 @@ fn generate_stmt(stmt: &PTNStmt) -> String {
         } => {
             output.push_str(&generate_expr(expr));
             output.push_str(";\n");
-        }
-        StmtType::CBlock {
-            c_block,
-        } => {
-            output.push_str("{ ");
-            output.push_str(&c_block.raw());
-            output.push_str("}\n");
         }
     }
 

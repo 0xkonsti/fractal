@@ -1,0 +1,23 @@
+// function.frac
+
+@std.println;
+
+fn add(a: f32, b: f32) f32 {
+    return a + b;
+}
+
+fn add_to(base: !f32, value: f32) {
+    // !f32: base is a mutable reference to a f32. By default, all function arguments are immutable.
+
+    base += value;
+}
+
+fn main() {
+    let a = 5.0;
+    let! b = 10.0; // !: b is a mutable variable
+    let c = add(a, b); // c = 15.0
+
+    add_to(b, c); // b = 25.0
+
+    println(f"a: {a}, b: {b}, c: {c}"); // a: 5, b: 25, c: 15
+}

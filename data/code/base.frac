@@ -1,4 +1,4 @@
-// base.fcl
+// base.frac
 
 /*
 This is the minimal fractal program that can be compiled.
@@ -7,5 +7,4 @@ This program will simply exit with a status code of 0.
 */
 
 fn main() {
-    10 + 10;
 }

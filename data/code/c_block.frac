@@ -1,0 +1,20 @@
+// c_block.frac
+
+@$stdio; // $ is used to import C functions
+
+$std.println;
+
+fn main() {
+    let a = 5;
+    let b: i32;
+
+    $ { // $ is used to denote a C block
+        // a is still visible here
+        int c = 5; // c is only visible within the C block
+        b = 10; // b can be assigned a value here and used outside the C block
+
+        printf("Hello, World!{%d}{%d}\n", a, c);
+    }
+
+    println(f"a: {a}, b: {b}"); // f is used to format strings
+}
