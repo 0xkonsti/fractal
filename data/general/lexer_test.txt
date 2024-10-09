@@ -6,3 +6,21 @@
     12.5 - 7 / 2.;
     (7 - 3) / 2;
 }
+
+let a: i8 = 5;
+let b: i16 = 7;
+let c: i32 = 9;
+let d: i64 = 11;
+let e: u8 = 13;
+let f: u16 = 15;
+let g: u32 = 17;
+let h: u64 = 19;
+let i: f32 = 21.5;
+let j: f64 = 23.5;
+let k: bool = true;
+let l: char = 'a';
+let m: str = "Hello, World!";
+
+fn main() {
+    println("Hello, World!");
+}

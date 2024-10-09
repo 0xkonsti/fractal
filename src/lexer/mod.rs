@@ -128,10 +128,32 @@ impl<'a> Iterator for Lexer<'a> {
                         lexeme,
                     )
                 }
+                c if c == '"' => {
+                    let mut lexeme = String::new();
+                    while let Some(c) = self.advance() {
+                        if c == '"' {
+                            break;
+                        }
+                        lexeme.push(c);
+                    }
+
+                    (TokenType::String, lexeme)
+                }
+                c if c == '\'' => {
+                    let mut lexeme = String::new();
+                    while let Some(c) = self.advance() {
+                        if c == '\'' {
+                            break;
+                        }
+                        lexeme.push(c);
+                    }
+
+                    (TokenType::Character, lexeme)
+                }
                 _ => {
                     // TODO: handle multi-char tokens before single-char tokens
 
-                    if let Some(tt) = handle_single_char_token(c) {
+                    if let Some(tt) = TokenType::is_single_char_token(c) {
                         (tt, c.to_string())
                     } else {
                         (TokenType::Invalid, c.to_string())
@@ -200,23 +222,4 @@ fn is_number(c: char, is_float: &mut bool) -> bool {
     }
 
     c.is_digit(10)
-}
-
-fn handle_single_char_token(c: char) -> Option<TokenType> {
-    match c {
-        '(' => Some(TokenType::LParen),
-        ')' => Some(TokenType::RParen),
-        '{' => Some(TokenType::LBrace),
-        '}' => Some(TokenType::RBrace),
-
-        '+' => Some(TokenType::Plus),
-        '-' => Some(TokenType::Minus),
-        '*' => Some(TokenType::Asterisk),
-        '/' => Some(TokenType::Slash),
-
-        '$' => Some(TokenType::Dollar),
-
-        ';' => Some(TokenType::SemiColon),
-        _ => None,
-    }
 }

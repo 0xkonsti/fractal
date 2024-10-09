@@ -19,7 +19,7 @@ impl PTNode for PTNProgram {
         let mut func_decls = Vec::new();
         while let Some(token) = lexer.peek_token() {
             match token.token_type() {
-                TokenType::Fn_ => {
+                TokenType::Fn => {
                     let func_decl = PTNFuncDecl::parse(lexer);
                     func_decls.push(downcast_node!(func_decl, PTNFuncDecl));
                 }

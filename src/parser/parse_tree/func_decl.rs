@@ -33,7 +33,7 @@ impl PTNFuncDecl {
 impl PTNode for PTNFuncDecl {
     fn parse(lexer: &mut Lexer) -> Box<dyn PTNode> {
         if let Some(token) = lexer.next_token() {
-            if token.token_type() != TokenType::Fn_ {
+            if token.token_type() != TokenType::Fn {
                 unexpected_token!(token);
             }
         }
