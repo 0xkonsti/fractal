@@ -1,7 +1,6 @@
-use std::collections::HashSet;
-
 use super::block::generate_block;
 use crate::parser::parse_tree::func_decl::PTNFuncDecl;
+use std::collections::HashSet;
 
 pub fn generate_function_decl(func_decl: &PTNFuncDecl, includes: &mut HashSet<String>) -> String {
     let mut output = String::new();

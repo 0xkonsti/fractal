@@ -1,7 +1,6 @@
-use std::collections::HashSet;
-
 use super::function::generate_function_decl;
 use crate::parser::parse_tree::program::PTNProgram;
+use std::collections::HashSet;
 
 pub fn generate_program(program: &PTNProgram, includes: &mut HashSet<String>) -> String {
     let mut output = String::new();

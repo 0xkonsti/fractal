@@ -7,6 +7,7 @@ use std::fs::{create_dir_all, File};
 use std::io::prelude::*;
 
 mod block;
+mod c_stmt;
 mod expr;
 mod factor;
 mod function;
@@ -43,14 +44,14 @@ impl Codegen {
         let function = program::generate_program(&program, &mut includes);
 
         for include in &includes {
-            self.output.push_str(format!("#include {}\n", include).as_str());
+            self.output
+                .push_str(format!("#include {}\n", include).as_str());
         }
         if !includes.is_empty() {
             self.output.push_str("\n");
         }
 
         self.output.push_str(&function);
-
     }
 
     pub fn save(&self, path: &str) {

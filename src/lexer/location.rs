@@ -34,10 +34,6 @@ impl Location {
 
 impl Display for Location {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        write!(
-            f,
-            "<{}:{}:{}>",
-            self.path, self.line, self.column
-        )
+        write!(f, "<{}:{}:{}>", self.path, self.line, self.column)
     }
 }

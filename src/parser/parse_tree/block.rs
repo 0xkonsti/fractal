@@ -31,8 +31,12 @@ impl PTNode for PTNBlock {
                 _ => {
                     let stmt = downcast_node!(PTNStmt::parse(lexer), PTNStmt);
                     match stmt.stmt_type() {
-                        StmtType::Block { block } => if block.stmts().is_empty() {
-                            continue;
+                        StmtType::Block {
+                            block,
+                        } => {
+                            if block.stmts().is_empty() {
+                                continue;
+                            }
                         }
                         _ => {}
                     }

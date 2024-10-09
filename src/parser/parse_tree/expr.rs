@@ -1,10 +1,9 @@
-use std::process::exit;
-
 use super::term::PTNTerm;
 use super::{PTNode, PTNodeType};
 use crate::downcast_node;
 use crate::lexer::{location, Lexer, TokenType};
 use crate::parser::error;
+use std::process::exit;
 
 #[derive(Debug, Clone)]
 pub enum PTNExprType {

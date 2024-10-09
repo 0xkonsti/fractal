@@ -1,8 +1,7 @@
-use std::collections::HashSet;
-
 use super::push_indented;
 use super::stmt::generate_stmt;
 use crate::parser::parse_tree::block::PTNBlock;
+use std::collections::HashSet;
 
 pub fn generate_block(
     block: &PTNBlock,

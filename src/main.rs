@@ -6,7 +6,7 @@ use std::fs;
 
 fn main() {
     // let path = "./data/general/lexer_test.txt".to_string();
-    let path = "./data/code/variable.frac".to_string();
+    let path = "./data/code/c_block.frac".to_string();
     let source = fs::read_to_string(&path).expect("Failed to read file");
 
     let mut lexer = lexer::Lexer::new(path, &source);
