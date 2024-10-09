@@ -147,7 +147,7 @@ impl TokenType {
         }
     }
 
-    fn to_string(&self) -> String {
+    pub fn to_string(&self) -> String {
         format!("{:?}", self).to_uppercase()
     }
 }
@@ -174,6 +174,14 @@ impl Token {
 
     pub fn lexeme(&self) -> &str {
         &self.lexeme
+    }
+
+    pub fn location(&self) -> &Location {
+        &self.location
+    }
+
+    pub fn location_mut(&mut self) -> &mut Location {
+        &mut self.location
     }
 }
 

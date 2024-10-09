@@ -1,6 +1,7 @@
 use crate::lexer::Lexer;
 
 pub mod parse_tree;
+mod error;
 
 #[macro_export]
 macro_rules! unexpected_token {

@@ -14,6 +14,9 @@ pub struct Lexer<'a> {
 
     peeked: Option<Token>,
 
+    current_token: Option<Token>,
+    prev_token: Option<Token>,
+
     at_eof: bool,
 }
 
@@ -26,12 +29,17 @@ impl<'a> Lexer<'a> {
 
             peeked: None,
 
+            current_token: None,
+            prev_token: None,
+
             at_eof: false,
         }
     }
 
     pub fn next_token(&mut self) -> Option<Token> {
-        self.__next()
+        self.prev_token = self.current_token.take();
+        self.current_token = self.__next();
+        self.current_token.clone()
     }
 
     pub fn peek_token(&mut self) -> Option<&Token> {
@@ -39,6 +47,10 @@ impl<'a> Lexer<'a> {
             self.peeked = self.next();
         }
         self.peeked.as_ref()
+    }
+
+    pub fn prev_token(&self) -> Option<&Token> {
+        self.prev_token.as_ref()
     }
 
     fn __next(&mut self) -> Option<Token> {

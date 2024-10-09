@@ -40,7 +40,7 @@ impl Codegen {
 
         let mut includes: HashSet<String> = HashSet::new();
 
-        let function = program::generate_program(&program, &mut includes, 0);
+        let function = program::generate_program(&program, &mut includes);
 
         for include in &includes {
             self.output.push_str(format!("#include {}\n", include).as_str());

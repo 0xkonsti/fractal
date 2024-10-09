@@ -1,6 +1,7 @@
 use super::expr::PTNExpr;
 use super::{PTNode, PTNodeType};
 use crate::lexer::{self, TokenType};
+use crate::parser::error;
 use crate::parser::parse_tree::expr::{self, get_expr};
 use crate::{downcast_node, unexpected_token};
 
@@ -35,14 +36,15 @@ impl PTNode for PTNVarDecl {
 
             let var_type = if let Some(token) = lexer.next_token() {
                 if token.token_type() != TokenType::Colon {
-                    unexpected_token!(token);
+                    error::expected_token(lexer, TokenType::Colon);
                 }
 
                 if let Some(token) = lexer.next_token() {
                     if token.token_type().is_type() {
                         token.token_type()
                     } else {
-                        unexpected_token!(token);
+                        error::expected_custom(lexer, "type declaration".to_string());
+                        panic!();
                     }
                 } else {
                     panic!("Unexpected EOF");
@@ -55,7 +57,7 @@ impl PTNode for PTNVarDecl {
                 if token.token_type() == TokenType::Equal {
                     lexer.next_token();
                 } else {
-                    unexpected_token!(token.clone());
+                    error::expected_token(lexer, TokenType::Equal);
                 }
             }
 

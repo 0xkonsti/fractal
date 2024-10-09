@@ -24,13 +24,19 @@ impl Location {
             self.column += 1;
         }
     }
+
+    pub fn advance_by(&mut self, s: &str) {
+        for c in s.chars() {
+            self.advance(&c);
+        }
+    }
 }
 
 impl Display for Location {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         write!(
             f,
-            "<{:<40}> - ({:>7}:{:>4})",
+            "<{}:{}:{}>",
             self.path, self.line, self.column
         )
     }

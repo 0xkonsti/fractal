@@ -1,3 +1,4 @@
+use super::block::PTNBlock;
 use super::expr::PTNExpr;
 use super::var_decl::PTNVarDecl;
 use super::{PTNode, PTNodeType};
@@ -9,6 +10,7 @@ use crate::parser::parse_tree::expr::get_expr;
 pub enum StmtType {
     Expr { expr: PTNExpr },
     VarDecl { var_decl: PTNVarDecl },
+    Block { block: PTNBlock },
     Return { expr: PTNExpr },
 }
 
@@ -27,6 +29,13 @@ impl PTNode for PTNStmt {
     fn parse(lexer: &mut Lexer) -> Box<dyn PTNode> {
         if let Some(token) = lexer.peek_token() {
             match token.token_type() {
+                TokenType::LBrace => {
+                    return Box::new(Self {
+                        stmt_type: StmtType::Block {
+                            block: downcast_node!(PTNBlock::parse(lexer), PTNBlock),
+                        },
+                    });
+                }
                 TokenType::Return => {
                     lexer.next_token();
                     return Box::new(Self {

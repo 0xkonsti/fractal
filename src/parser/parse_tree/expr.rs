@@ -1,7 +1,10 @@
+use std::process::exit;
+
 use super::term::PTNTerm;
 use super::{PTNode, PTNodeType};
 use crate::downcast_node;
-use crate::lexer::{Lexer, TokenType};
+use crate::lexer::{location, Lexer, TokenType};
+use crate::parser::error;
 
 #[derive(Debug, Clone)]
 pub enum PTNExprType {
@@ -66,9 +69,8 @@ impl PTNode for PTNExpr {
 pub fn get_expr(lexer: &mut Lexer) -> PTNExpr {
     let expr = PTNExpr::parse(lexer);
     if let Some(token) = lexer.next_token() {
-        println!("{:?}", token);
         if token.token_type() != TokenType::Semicolon {
-            panic!("Expected semicolon");
+            error::expected_token(lexer, TokenType::Semicolon);
         }
     }
     downcast_node!(expr, PTNExpr)

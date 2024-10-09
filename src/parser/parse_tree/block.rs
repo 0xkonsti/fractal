@@ -1,4 +1,4 @@
-use super::stmt::PTNStmt;
+use super::stmt::{PTNStmt, StmtType};
 use super::{PTNode, PTNodeType};
 use crate::lexer::{Lexer, TokenType};
 use crate::{downcast_node, unexpected_token};
@@ -29,7 +29,13 @@ impl PTNode for PTNBlock {
                     break;
                 }
                 _ => {
-                    let stmt = PTNStmt::parse(lexer);
+                    let stmt = downcast_node!(PTNStmt::parse(lexer), PTNStmt);
+                    match stmt.stmt_type() {
+                        StmtType::Block { block } => if block.stmts().is_empty() {
+                            continue;
+                        }
+                        _ => {}
+                    }
                     stmts.push(downcast_node!(stmt, PTNStmt));
                 }
             }
