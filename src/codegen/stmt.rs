@@ -1,4 +1,5 @@
 use super::expr::generate_expr;
+use super::var_decl::generate_var_decl;
 use crate::parser::parse_tree::stmt::{PTNStmt, StmtType};
 
 pub fn generate_stmt(stmt: &PTNStmt) -> String {
@@ -10,6 +11,11 @@ pub fn generate_stmt(stmt: &PTNStmt) -> String {
             output.push_str("return ");
             output.push_str(&generate_expr(expr));
             output.push_str(";\n");
+        }
+        StmtType::VarDecl {
+            var_decl,
+        } => {
+            output.push_str(&generate_var_decl(&var_decl));
         }
         StmtType::Expr {
             expr,

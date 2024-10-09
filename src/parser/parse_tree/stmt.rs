@@ -1,11 +1,14 @@
 use super::expr::PTNExpr;
+use super::var_decl::PTNVarDecl;
 use super::{PTNode, PTNodeType};
 use crate::downcast_node;
 use crate::lexer::{Lexer, TokenType};
+use crate::parser::parse_tree::expr::get_expr;
 
 #[derive(Debug, Clone)]
 pub enum StmtType {
     Expr { expr: PTNExpr },
+    VarDecl { var_decl: PTNVarDecl },
     Return { expr: PTNExpr },
 }
 
@@ -32,6 +35,14 @@ impl PTNode for PTNStmt {
                         },
                     });
                 }
+                TokenType::Let => {
+                    lexer.next_token();
+                    return Box::new(Self {
+                        stmt_type: StmtType::VarDecl {
+                            var_decl: downcast_node!(PTNVarDecl::parse(lexer), PTNVarDecl),
+                        },
+                    });
+                }
                 _ => {
                     return Box::new(Self {
                         stmt_type: StmtType::Expr {
@@ -52,15 +63,4 @@ impl PTNode for PTNStmt {
     fn as_any(&self) -> Box<dyn std::any::Any> {
         Box::new(self.clone())
     }
-}
-
-fn get_expr(lexer: &mut Lexer) -> PTNExpr {
-    let expr = PTNExpr::parse(lexer);
-    if let Some(token) = lexer.next_token() {
-        println!("{:?}", token);
-        if token.token_type() != TokenType::SemiColon {
-            panic!("Expected semicolon");
-        }
-    }
-    downcast_node!(expr, PTNExpr)
 }

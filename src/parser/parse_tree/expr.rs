@@ -62,3 +62,14 @@ impl PTNode for PTNExpr {
         Box::new(self.clone())
     }
 }
+
+pub fn get_expr(lexer: &mut Lexer) -> PTNExpr {
+    let expr = PTNExpr::parse(lexer);
+    if let Some(token) = lexer.next_token() {
+        println!("{:?}", token);
+        if token.token_type() != TokenType::Semicolon {
+            panic!("Expected semicolon");
+        }
+    }
+    downcast_node!(expr, PTNExpr)
+}

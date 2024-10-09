@@ -22,7 +22,7 @@ pub enum TokenType {
     Dollar, // $
 
     Colon,     // :
-    SemiColon, // ;
+    Semicolon, // ;
 
     // Multi-character tokens
 
@@ -30,6 +30,8 @@ pub enum TokenType {
     Fn,
     Return,
     Let,
+    True,
+    False,
 
     // Types (more Keywords)
     I8,
@@ -73,7 +75,7 @@ impl TokenType {
             '$' => Some(TokenType::Dollar),
 
             ':' => Some(TokenType::Colon),
-            ';' => Some(TokenType::SemiColon),
+            ';' => Some(TokenType::Semicolon),
             _ => None,
         }
     }
@@ -83,6 +85,8 @@ impl TokenType {
             "fn" => Some(TokenType::Fn),
             "return" => Some(TokenType::Return),
             "let" => Some(TokenType::Let),
+            "true" => Some(TokenType::True),
+            "false" => Some(TokenType::False),
 
             // Types
             "i8" => Some(TokenType::I8),
@@ -106,6 +110,39 @@ impl TokenType {
     pub fn is_number(&self) -> bool {
         match self {
             TokenType::Integer | TokenType::Float => true,
+            _ => false,
+        }
+    }
+
+    pub fn is_type(&self) -> bool {
+        match self {
+            TokenType::I8
+            | TokenType::I16
+            | TokenType::I32
+            | TokenType::I64
+            | TokenType::U8
+            | TokenType::U16
+            | TokenType::U32
+            | TokenType::U64
+            | TokenType::F32
+            | TokenType::F64
+            | TokenType::Bool
+            | TokenType::CharType
+            | TokenType::StrType => true,
+            _ => false,
+        }
+    }
+
+    pub fn is_int_type(&self) -> bool {
+        match self {
+            TokenType::I8
+            | TokenType::I16
+            | TokenType::I32
+            | TokenType::I64
+            | TokenType::U8
+            | TokenType::U16
+            | TokenType::U32
+            | TokenType::U64 => true,
             _ => false,
         }
     }

@@ -5,7 +5,7 @@ pub mod parse_tree;
 #[macro_export]
 macro_rules! unexpected_token {
     ($token:expr) => {
-        panic!("Unexpected token: {:#?}", $token);
+        panic!("Unexpected token: {:#?}", $token)
     };
 }
 

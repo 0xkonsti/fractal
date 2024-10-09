@@ -24,7 +24,6 @@ impl PTNNumber {
     }
 }
 
-#[allow(semicolon_in_expressions_from_macros)] // TODO: this could cause some issues in future versions of Rust
 impl PTNode for PTNNumber {
     fn parse(lexer: &mut Lexer) -> Box<dyn PTNode> {
         let (number_type, value) = if let Some(token) = lexer.next_token() {

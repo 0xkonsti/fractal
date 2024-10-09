@@ -7,6 +7,9 @@ pub mod param_list;
 pub mod program;
 pub mod stmt;
 pub mod term;
+pub mod var_decl;
+
+use std::collections::HashSet;
 
 use crate::lexer::Lexer;
 
@@ -27,6 +30,7 @@ pub enum PTNodeType {
 
     Block,
     Stmt,
+    VarDecl,
     Expr,
     Term,
     Factor,
@@ -50,7 +54,7 @@ pub struct ParseTree {
 
 impl PTNodeType {
     fn to_string(&self) -> String {
-        format!("{:?}", self).to_uppercase().replace("_", "")
+        format!("{:?}", self).to_uppercase()
     }
 }
 

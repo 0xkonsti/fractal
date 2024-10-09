@@ -22,7 +22,6 @@ impl PTNFactor {
     }
 }
 
-#[allow(semicolon_in_expressions_from_macros)] // TODO: this could cause some issues in future versions of Rust
 impl PTNode for PTNFactor {
     fn parse(lexer: &mut Lexer) -> Box<dyn PTNode> {
         if let Some(token) = lexer.peek_token().cloned() {

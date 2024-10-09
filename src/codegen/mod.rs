@@ -6,14 +6,14 @@ use std::fs::{create_dir_all, File};
 use std::io::prelude::*;
 
 mod block;
-mod function;
-mod program;
-
 mod expr;
 mod factor;
+mod function;
 mod op;
+mod program;
 mod stmt;
 mod term;
+mod var_decl;
 
 pub const INDENT: &str = "    ";
 
@@ -37,6 +37,10 @@ impl Codegen {
 
         let program = downcast_node!(root, PTNProgram);
 
+        // Add the necessary includes
+        // TODO: check if these are actually necessary (e.g. might not use any int types)
+        self.output.push_str("#include <stdint.h>\n\n");
+
         self.output
             .push_str(&program::generate_program(&program, 0));
     }
@@ -52,5 +56,4 @@ impl Codegen {
 pub fn push_indented(output: &mut String, indent_depth: usize, line: &str) {
     output.push_str(&INDENT.repeat(indent_depth));
     output.push_str(line);
-    // output.push_str("\n");
 }

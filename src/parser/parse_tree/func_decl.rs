@@ -38,14 +38,16 @@ impl PTNode for PTNFuncDecl {
             }
         }
 
-        let mut name = String::new();
-        if let Some(token) = lexer.next_token() {
+        // let mut name = String::new();
+        let name = if let Some(token) = lexer.next_token() {
             if token.token_type() != TokenType::Identifier {
                 unexpected_token!(token);
             }
 
-            name = token.lexeme().to_string();
-        }
+            token.lexeme().to_string()
+        } else {
+            panic!("Unexpected EOF");
+        };
         let is_main = name == "main";
 
         let param_list = PTNParamList::parse(lexer);
